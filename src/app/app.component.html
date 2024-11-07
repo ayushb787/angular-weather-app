@@ -1,6 +1,7 @@
 <div class="flex flex-col items-center py-10 bg-blue-50 min-h-screen">
   <h1 class="text-4xl font-bold text-blue-600 mb-6">Weather App</h1>
 
+  <!-- Country Selector -->
   <div class="w-full max-w-xs mb-6">
     <select
       [(ngModel)]="selectedCountry"
@@ -13,23 +14,60 @@
     </select>
   </div>
 
-  <div *ngIf="weatherData" class="w-full max-w-md bg-white shadow-md rounded-lg p-6 text-center">
-    <h2 class="text-2xl font-semibold text-blue-700 mb-4">
+  <!-- Weather Card -->
+  <div *ngIf="weatherData" class="w-full max-w-md bg-white shadow-lg rounded-lg p-6 text-center space-y-4">
+    <h2 class="text-2xl font-semibold text-blue-700">
       Weather in {{ weatherData.name }}
     </h2>
 
-    <div *ngIf="weatherData.main">
-      <p class="text-3xl font-bold text-blue-600 mb-2">
+    <!-- Temperature and "Feels Like" -->
+    <div class="flex justify-center items-center space-x-4">
+      <p class="text-5xl font-bold text-blue-600">
         {{ (weatherData.main.temp - 273.15) | number: '1.0-0' }}°C
       </p>
-    </div>
-
-    <div *ngIf="weatherData.weather">
-      <p class="text-lg text-gray-700 italic">
-        Condition: {{ weatherData.weather[0].description }}
+      <p class="text-sm text-gray-500">
+        Feels like: {{ (weatherData.main.feels_like - 273.15) | number: '1.0-0' }}°C
       </p>
     </div>
 
+    <!-- Weather Conditions -->
+    <div class="flex justify-center items-center space-x-4">
+      <img
+        *ngIf="weatherData.weather[0].icon"
+        [src]="'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png'"
+        alt="weather icon"
+        class="w-12 h-12"
+      />
+      <p class="text-lg font-semibold text-gray-700">
+        {{ weatherData.weather[0].description | titlecase }}
+      </p>
+    </div>
+
+    <!-- Additional Details -->
+    <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-4">
+      <div class="flex justify-between items-center">
+        <span>Humidity:</span>
+        <span class="font-semibold">{{ weatherData.main.humidity }}%</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span>Pressure:</span>
+        <span class="font-semibold">{{ weatherData.main.pressure }} hPa</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span>Wind Speed:</span>
+        <span class="font-semibold">{{ weatherData.wind.speed }} m/s</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span>Visibility:</span>
+        <span class="font-semibold">{{ weatherData.visibility / 1000 }} km</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span>Cloud Coverage:</span>
+        <span class="font-semibold">{{ weatherData.clouds.all }}%</span>
+      </div>
+    </div>
+
+    <!-- Error Message -->
     <p *ngIf="weatherData.error" class="text-red-500 mt-4">
       {{ weatherData.error }}
     </p>
