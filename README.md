@@ -1,4 +1,4 @@
-# Hosted on -> (https://angular-weather-app-pi.vercel.app/)
+# Hosted on -> https://angular-weather-app-pi.vercel.app/
 
 
 # Weatherapp
