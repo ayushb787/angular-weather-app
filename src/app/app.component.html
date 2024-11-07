@@ -1,7 +1,6 @@
 <div class="flex flex-col items-center py-10 bg-blue-50 min-h-screen">
   <h1 class="text-4xl font-bold text-blue-600 mb-6">Weather App</h1>
 
-  <!-- Country Selector -->
   <div class="w-full max-w-xs mb-6">
     <select
       [(ngModel)]="selectedCountry"
@@ -14,13 +13,11 @@
     </select>
   </div>
 
-  <!-- Weather Card -->
   <div *ngIf="weatherData" class="w-full max-w-md bg-white shadow-lg rounded-lg p-6 text-center space-y-4">
     <h2 class="text-2xl font-semibold text-blue-700">
       Weather in {{ weatherData.name }}
     </h2>
 
-    <!-- Temperature and "Feels Like" -->
     <div class="flex justify-center items-center space-x-4">
       <p class="text-5xl font-bold text-blue-600">
         {{ (weatherData.main.temp - 273.15) | number: '1.0-0' }}°C
@@ -30,7 +27,6 @@
       </p>
     </div>
 
-    <!-- Weather Conditions -->
     <div class="flex justify-center items-center space-x-4">
       <img
         *ngIf="weatherData.weather[0].icon"
@@ -43,31 +39,52 @@
       </p>
     </div>
 
-    <!-- Additional Details -->
-    <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 mt-4">
-      <div class="flex justify-between items-center">
-        <span>Humidity:</span>
+    <button
+      (click)="showMore = !showMore"
+      class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none"
+    >
+      {{ showMore ? 'Show Less Details' : 'Show More Details' }}
+    </button>
+
+    <div *ngIf="showMore" class="mt-4 space-y-2 text-gray-600">
+      <div class="flex items-center justify-between">
+        <span class="flex items-center">
+          <i class="fas fa-tint mr-2 text-blue-500"></i> Humidity:
+        </span>
         <span class="font-semibold">{{ weatherData.main.humidity }}%</span>
       </div>
-      <div class="flex justify-between items-center">
-        <span>Pressure:</span>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center">
+          <i class="fas fa-compress-arrows-alt mr-2 text-blue-500"></i> Pressure:
+        </span>
         <span class="font-semibold">{{ weatherData.main.pressure }} hPa</span>
       </div>
-      <div class="flex justify-between items-center">
-        <span>Wind Speed:</span>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center">
+          <i class="fas fa-wind mr-2 text-blue-500"></i> Wind Speed:
+        </span>
         <span class="font-semibold">{{ weatherData.wind.speed }} m/s</span>
       </div>
-      <div class="flex justify-between items-center">
-        <span>Visibility:</span>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center">
+          <i class="fas fa-eye mr-2 text-blue-500"></i> Visibility:
+        </span>
         <span class="font-semibold">{{ weatherData.visibility / 1000 }} km</span>
       </div>
-      <div class="flex justify-between items-center">
-        <span>Cloud Coverage:</span>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center">
+          <i class="fas fa-cloud mr-2 text-blue-500"></i> Cloud Coverage:
+        </span>
         <span class="font-semibold">{{ weatherData.clouds.all }}%</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="flex items-center">
+          <i class="fas fa-compass mr-2 text-blue-500"></i> Wind Direction:
+        </span>
+        <span class="font-semibold">{{ weatherData.wind.deg }}°</span>
       </div>
     </div>
 
-    <!-- Error Message -->
     <p *ngIf="weatherData.error" class="text-red-500 mt-4">
       {{ weatherData.error }}
     </p>

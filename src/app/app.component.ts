@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   selectedCountry: string = '';
   weatherData: any = null;
   apiKey: string = '48dbcc17dfccd5ff9806342da5fe98cb'; 
-
+  showMore: boolean = false;
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
