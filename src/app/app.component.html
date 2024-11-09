@@ -1,11 +1,13 @@
 <div class="flex flex-col items-center py-10 bg-blue-50 min-h-screen">
   <h1 class="text-4xl font-bold text-blue-600 mb-6">Weather App</h1>
 
-  <div class="w-full max-w-xs mb-6">
+  <div class="w-full max-w-xs mb-6 flex flex-col gap-2">
+    <label for="country-selection" class="text-xl font-bold text-blue-800">Select Country</label>
     <select
+      id="country-selection"
       [(ngModel)]="selectedCountry"
       (change)="onCountrySelect()"
-      class="block w-full px-4 py-2 text-lg text-blue-700 border border-blue-400 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      class="block w-full px-4 py-2 text-lg text-blue-800 border border-blue-400 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
     >
       <option *ngFor="let country of countries" [value]="country.name">
         {{ country.name }}
@@ -14,7 +16,7 @@
   </div>
 
   <div *ngIf="weatherData" class="w-full max-w-md bg-white shadow-lg rounded-lg p-6 text-center space-y-4">
-    <h2 class="text-2xl font-semibold text-blue-700">
+    <h2 class="text-2xl font-semibold text-blue-800">
       Weather in {{ weatherData.name }}
     </h2>
 
@@ -40,11 +42,15 @@
     </div>
 
     <button
-      (click)="showMore = !showMore"
-      class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none"
-    >
-      {{ showMore ? 'Show Less Details' : 'Show More Details' }}
-    </button>
+    (click)="showMore = !showMore"
+    type="button" 
+    value="toggleDetails"
+    class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 focus:outline-none"
+    aria-label="Show More Details"
+    [attr.aria-label]="showMore ? 'Show Less Details' : 'Show More Details'"
+  >
+    {{ showMore ? 'Show Less Details' : 'Show More Details' }}
+  </button>
 
     <div *ngIf="showMore" class="mt-4 space-y-2 text-gray-600">
       <div class="flex items-center justify-between">
